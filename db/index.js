@@ -7,7 +7,7 @@ mongoose.connect('mongodb+srv://yaswanth14333:JGiLaIwoVrSqCFi9@100xdevs.eifljem.
 const UserSchema = new mongoose.Schema({
     username: String,
     password: String,
-    purchasedCourses: [{
+    purchasedProducts: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Product'
     }]
