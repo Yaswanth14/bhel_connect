@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://yaswanth14333:JGiLaIwoVrSqCFi9@100xdevs.eifljem.mongodb.net/test_connect');
+// mongoose.connect('mongodb+srv://yaswanth14333:JGiLaIwoVrSqCFi9@100xdevs.eifljem.mongodb.net/test_connect');
+mongoose.connect('mongodb://localhost:27017/test_connect');
 
 // Schema
 const UserSchema = new mongoose.Schema({

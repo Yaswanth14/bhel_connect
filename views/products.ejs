@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+
+    <h1>Signin Success</h1>
+
+    <% const test = JSON.stringify(data.products) %>
+    <p><%= test %></p>
+
+    <div class="container">
+        <% const products = data.products %>
+        <% products.forEach(function(product) { %>
+            <div class="d-flex justify-content-around shadow bg-body rounded align-items-center">
+                <div class="">
+                    <h2><%= product.name %></h2>
+                    <p><%= product.description %></p>
+                    <p><%= product.price %></p>
+                </div>
+                <div class=""><div class="btn btn-primary">Buy Product</div></div>   
+            </div><br><br>
+        <% });%>
+    </div>
+
+    
+</body>
+</html>
