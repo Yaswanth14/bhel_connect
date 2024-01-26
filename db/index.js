@@ -1,7 +1,18 @@
 const mongoose = require("mongoose");
+const dotenv = require('dotenv');
+dotenv.config();
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://yaswanth14333:JGiLaIwoVrSqCFi9@100xdevs.eifljem.mongodb.net/test_connect');
+const connectDB = async () => {
+    try {
+        const conn = await mongoose.connect(process.env.MONGO_URL);
+        console.log(`Connected to Database ${conn.connection.host}`);
+    } catch (error) {
+        console.log('Error in mongo', error);
+    }
+}
+
+connectDB();
 
 // Schema
 const UserSchema = new mongoose.Schema({
