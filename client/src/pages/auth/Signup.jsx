@@ -1,22 +1,36 @@
 import React, {useState} from 'react'
 import Layout from '../../components/Layout/Layout'
+import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import axios from 'axios'
+import "../../styles/AuthStyles.css"
 
 const Signup = () => {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+    const navigate = useNavigate()
 
     // Form function
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(username, password);
-        toast.success('Registered Successfully');
+        try {
+            const res = await axios.post(`${import.meta.env.VITE_API}/user/signup`, {username, password});
+            if(res.data.success){
+                toast.success(res.data.message);
+                navigate('/signin');
+            } else{
+                toast.error(res.data.message);
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error('Error signing up!');
+        }
     }
     
   return (
     <Layout>
-        <div className="signup">
-        <h1>Register here</h1>
+        <div className="form-container">
+        <h4 className='title'>Register here</h4>
         <form onSubmit={handleSubmit}>
             <div className="mb-3">
                 <label className="form-label">Username</label>
