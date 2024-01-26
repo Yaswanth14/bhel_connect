@@ -8,9 +8,10 @@ const cors = require('cors');
 //configure env
 dotenv.config();
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use("/user", userRouter);
-app.use(cors());
+
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

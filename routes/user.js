@@ -3,7 +3,8 @@ const router = Router();
 const userMiddleware = require("../middleware/user")
 const { User, Product } = require("../db");
 const jwt = require("jsonwebtoken");
-const { JWT_SECRET } = require("../config");
+const dotenv = require('dotenv');
+dotenv.config();
 
 //User Routes
 
@@ -18,7 +19,8 @@ router.post('/signup', async (req, res) => {
         password: password
     })
     
-    res.json({
+    res.status(200).send({
+        success: true,
         message: 'User created successfully'
     })
 });
@@ -28,25 +30,45 @@ router.post('/signin', async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
-    const user = await User.find({
+    const user = await User.findOne({
         username,
         password
     })
 
-    if(user){
-        const token = jwt.sign({
-            username: username
-        }, JWT_SECRET);
+    try {
 
+        if(user){
+            const token = jwt.sign({
+                username: username
+            }, process.env.JWT_SECRET, {
+                expiresIn: "3d",
+            });
+    
+            res.status(200).send({
+                success: true,
+                message: "User loged in",
+                user: {
+                    _id: user._id,
+                    name: user.username
+                },
+                token: token
+            });
+        }
+        else{
+            res.send({
+                success: false,
+                message: "Incorrect email or password"
+            });
+        }
+        
+    } catch (error) {
         res.json({
-            token: token
+            success: false,
+            message: "User doesn't exist"
         });
     }
-    else{
-        res.status(411).json({
-            message: "Incorrect email or password"
-        });
-    }
+
+    
 });
 
 //Sell a product in the marketplace
@@ -121,5 +143,13 @@ router.get('/myOrders', userMiddleware, async (req, res) => {
         orders: orders
     });
 });
+
+router.get('/user-auth', userMiddleware, (req, res) => {
+    res.status(200).send({
+        ok: true,
+        success: true,
+        message: "You are Authorized"
+    })
+})
 
 module.exports = router
