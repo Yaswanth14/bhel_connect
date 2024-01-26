@@ -1,7 +1,18 @@
 import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
+import { useAuth } from '../../context/Auth'
+import { toast } from 'react-toastify'
 
 const Header = () => {
+  const [auth, setAuth] = useAuth();
+  const handleSignout = () => {
+    setAuth({
+      ...auth, user: null, token: ""
+    })
+    localStorage.removeItem('auth')
+    toast.success('Logout Successfull');
+  }
+
   return (
     <>
        <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -15,12 +26,26 @@ const Header = () => {
           <li className="nav-item">
             <NavLink to='/' className="nav-link">Home</NavLink>
           </li>
-          <li className="nav-item">
-            <NavLink to='/signup' className="nav-link">Register</NavLink>
-          </li>
-          <li className="nav-item">
-            <NavLink to='/signin' className="nav-link">Login</NavLink>
-          </li>
+          {!auth.user ? (
+            <>
+            <li className="nav-item">
+              <NavLink to='/signup' className="nav-link">Register</NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink to='/signin' className="nav-link">Login</NavLink>
+            </li>
+            </>
+          ) : (
+            <>
+            <div className="nav-item">
+              <NavLink to='/products' className="nav-link">Products</NavLink>
+            </div>
+            <li className="nav-item">
+              <NavLink onClick={handleSignout} to='/signin' className="nav-link">Logout</NavLink>
+            </li>
+            </>
+          )
+          }
         </ul>
       </div>
     </div>
