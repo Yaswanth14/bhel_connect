@@ -102,8 +102,8 @@ router.get('/products', userMiddleware, async (req, res) => {
 });
 
 //Purchase a product
-router.post('/buyProduct/:productId', userMiddleware, async (req, res) => {
-    const productId = req.params.productId;
+router.post('/buyProduct', userMiddleware, async (req, res) => {
+    const productId = req.body._id;
     const username = req.username;
 
     await User.updateOne({
@@ -140,7 +140,7 @@ router.get('/myOrders', userMiddleware, async (req, res) => {
     });
 
     res.json({
-        orders: orders
+        products: orders
     });
 });
 

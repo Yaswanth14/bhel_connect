@@ -1,0 +1,31 @@
+
+.product-container {
+    display: flex;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .image-container {
+    flex-shrink: 0;
+    width: 170px; /* Set a fixed width for the image container */
+  }
+  
+  .details-container {
+    flex-grow: 1;
+    padding: 10px;
+  }
+  
+  .button-container {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  button {
+    margin-left: auto;
+  }
+  
