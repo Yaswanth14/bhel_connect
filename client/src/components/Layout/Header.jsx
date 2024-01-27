@@ -38,10 +38,13 @@ const Header = () => {
           ) : (
             <>
             <div className="nav-item">
-              <NavLink to='/products' className="nav-link">Products</NavLink>
+              <NavLink to='/products/sale' className="nav-link">Products</NavLink>
             </div>
             <div className="nav-item">
               <NavLink to='/products/myOrders' className="nav-link">My Purchases</NavLink>
+            </div>
+            <div className="nav-item">
+              <NavLink to='/products/addProduct' className="nav-link">Add</NavLink>
             </div>
             <li className="nav-item">
               <NavLink onClick={handleSignout} to='/signin' className="nav-link">Logout</NavLink>

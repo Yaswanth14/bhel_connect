@@ -78,16 +78,25 @@ router.post('/addProduct', userMiddleware, async (req, res) => {
     const imageLink = req.body.imageLink;
     const price = req.body.price;
 
-    const newProduct = await Product.create({
-        name,
-        description,
-        imageLink,
-        price
-    });
-
-    res.json({
-        message: "Product created successfully", productId: newProduct._id 
-    });
+    try {
+        const newProduct = await Product.create({
+            name,
+            description,
+            imageLink,
+            price
+        });
+    
+        res.json({
+            success: true,
+            message: "Product created successfully", 
+            productId: newProduct._id 
+        });
+    } catch (error) {
+        res.json({
+            success: false,
+            message: "Database error",
+        })
+    }
 });  
 
 //Get all the available products

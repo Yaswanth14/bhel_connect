@@ -1,11 +1,14 @@
 import React, {useState, useEffect} from 'react'
 import Layout from '../components/Layout/Layout'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import "../styles/ProductsStyles.css"
 import { toast } from 'react-toastify'
 
 const Products = () => {
   const [products, setProducts] = useState([]);
+
+  const navigate = useNavigate()
 
   useEffect(() => {
       axios.get(`${import.meta.env.VITE_API}/user/products`).then((res) => {
@@ -21,13 +24,14 @@ const Products = () => {
       if (response.status === 200) {
         // Handle success (e.g., show a success message)
         toast.success('Product purchased successfully!');
+        navigate('/products/myOrders');
       } else {
         // Handle error (e.g., show an error message)
         toast.error('Failed to purchase product.');
       }
     } catch (error) {
       // Handle network error or other issues
-      console.error('An error occurred while making the purchase request:', error);
+      toast.error('Error occurred while making purchase request');
     }
   };
   

@@ -4,15 +4,22 @@ dotenv.config();
 
 function userMiddleware(req, res, next) {
     const jwtToken = req.headers.authorization;
-    const decodedValue = jwt.verify(jwtToken, process.env.JWT_SECRET);
+    try {
+        const decodedValue = jwt.verify(jwtToken, process.env.JWT_SECRET);
 
-    if (decodedValue.username) {    
-        req.username = decodedValue.username;
-        next();
-    } else {
+        if (decodedValue.username) {    
+            req.username = decodedValue.username;
+            next();
+        } else {
+            res.json({
+                success: false,
+                message: "You are not authenticated"
+            })
+        }
+    } catch (error) {
         res.json({
             success: false,
-            message: "You are not authenticated"
+            message: "Invalid Token!"
         })
     }
 }
